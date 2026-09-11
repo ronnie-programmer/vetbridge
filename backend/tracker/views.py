@@ -2,7 +2,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Appointment, Claim
-from .serializer import AppointmentSerializer, ClaimSerializer
+from .serializers import AppointmentSerializer, ClaimSerializer
 
 class ClaimViewSet(viewsets.ModelViewSet):
     serializer_class = ClaimSerializer

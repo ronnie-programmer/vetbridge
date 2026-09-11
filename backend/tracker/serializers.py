@@ -14,7 +14,7 @@ class AppointmentSerializer(serializers.ModelSerializer):
             'notes',
         ]
 
-    def validated_claim(self, value):
+    def validate_claim(self, value):
         if value.user != self.context['request'].user:
             raise serializers.ValidationError('That claim does not belong to you.')
         return value
