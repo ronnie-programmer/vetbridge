@@ -21,7 +21,7 @@ def register(request):
     link = f'http://localhost:5173/confirm/{confirmation.token}'
     send_mail(
         'Confirm your Vetbridge Account',
-        f'Click this link to confirm your account: {link}',
+        f'Click this link to confirm your account:\n\n {link}',
         'noreply@vetbridge.local',
         [user.email],
     )

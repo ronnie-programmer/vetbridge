@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/6.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.1/ref/settings/
 """
+import os
 from datetime import timedelta
 from pathlib import Path
 
@@ -20,12 +21,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-6sy%+2a)y%l+vu!)x5^^jfc5=a6h$fjhpu$^pj7kv$00g4a6ci'
-
+SECRET_KEY = os.environ.get(
+    'DJANGO_SECRET_KEY',
+    'django-insecure-dev-key-not-for-production',
+)
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get(
+    'DJANGO_ALLOWED_HOSTS',
+    'localhost,127.0.0.1',
+).split(',')
+
 
 
 # Application definition
@@ -81,11 +88,11 @@ WSGI_APPLICATION = 'vetbridge.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'vetbridge_v3', 
-        'USER': 'ronniefeliz', 
-        'PASSWORD': 'vetbridge1', 
-        'HOST': 'localhost', 
-        'PORT': '5432'
+        'NAME': os.environ.get('POSTGRES_DB', 'vetbridge_v3'),
+        'USER': os.environ.get('POSTGRES_USER', 'ronniefeliz'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'vetbridge1'),
+        'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
+        'PORT': os.environ.get('POSTGRES_PORT', '5432'),
     }
 }
 
